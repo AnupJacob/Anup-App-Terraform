@@ -25,7 +25,7 @@ resource "azurerm_resource_group" "anup-resource-group" {
 }
 
 # Create a virtual network within the resource group
-resource "azurerm_virtual_network" "example" {
+resource "azurerm_virtual_network" "anup-vnet" {
   name                = "anup-test-network"
   resource_group_name = azurerm_resource_group.anup-test-rg.name
   location            = azurerm_resource_group.anup-test-rg.location
