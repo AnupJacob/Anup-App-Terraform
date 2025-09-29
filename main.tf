@@ -24,6 +24,11 @@ resource "azurerm_subnet" "subnet" {
   address_prefixes     = ["10.0.1.0/24"]
 }
 
+resource "tls_private_key" "ssh" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
 resource "azurerm_linux_virtual_machine_scale_set" "anup_vm" {
   name                = "anup-vm"
   resource_group_name = azurerm_resource_group.anup-test-rg.name
@@ -33,7 +38,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "anup_vm" {
 
   admin_ssh_key {
     username   = "azureuser"
-    public_key = file("~/.ssh/id_rsa.pub")
+    public_key = tls_private_key.ssh.public_key_openssh
   }
 
   os_disk {
