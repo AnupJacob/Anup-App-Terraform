@@ -74,7 +74,7 @@ resource "azurerm_kubernetes_cluster" "default" {
   location            = azurerm_resource_group.anup-test-rg.location
   resource_group_name = azurerm_resource_group.anup-test-rg.name
   dns_prefix          = "${random_pet.rg_name.id}-k8s"
-  kubernetes_version  = "1.26.3"
+  kubernetes_version  = "1.33.0"
 
   default_node_pool {
     name            = "default"
