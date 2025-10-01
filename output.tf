@@ -6,3 +6,18 @@ output "private_key_pem" {
   value     = tls_private_key.ssh.private_key_pem
   sensitive = true
 }
+
+output "aks_name" {
+  description = "AKS cluster name"
+  value       = azurerm_kubernetes_cluster.default.name
+}
+
+output "acr_name" {
+  description = "ACR name"
+  value       = azurerm_container_registry.acr.name
+}
+
+output "acr_login_server" {
+  description = "ACR login server (use when tagging images)"
+  value       = azurerm_container_registry.acr.login_server
+}
