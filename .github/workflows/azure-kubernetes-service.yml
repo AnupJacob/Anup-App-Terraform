@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      IMAGE_NAME: "Anuptestapp"
+      IMAGE_NAME: "anuptestapp"
       ACR_NAME: "acrabf76d"
       IMAGE_TAG: ${{ github.sha }}
 
