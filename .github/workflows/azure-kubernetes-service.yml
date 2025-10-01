@@ -33,7 +33,7 @@ jobs:
       # 4. Build Docker image
       - name: Build Docker Image
         run: |
-          docker build -t $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG .
+          docker build -f ./../../test_app/Dockerfile -t $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG ./../../test_app/
 
       # 5. Push Docker image to ACR
       - name: Push Docker Image
