@@ -73,7 +73,7 @@ resource "random_id" "acr_suffix" {
 }
 
 resource "azurerm_container_registry" "acr" {
-  name                = "anup-acr${random_id.acr_suffix.hex}"
+  name                = "acr${random_id.acr_suffix.hex}"
   location            = azurerm_resource_group.anup-test-rg.location
   resource_group_name = azurerm_resource_group.anup-test-rg.name
   sku                 = var.acr_sku
