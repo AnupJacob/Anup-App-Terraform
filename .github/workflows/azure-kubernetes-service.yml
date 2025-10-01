@@ -6,11 +6,11 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_CONTAINER_REGISTRY: "your-azure-container-registry"
-  CONTAINER_NAME: "your-container-name"
-  RESOURCE_GROUP: "your-resource-group"
-  CLUSTER_NAME: "your-cluster-name"
-  DEPLOYMENT_MANIFEST_PATH: "your-deployment-manifest-path"
+  AZURE_CONTAINER_REGISTRY: ${{ env.AZURE_CONTAINER_REGISTRY }}
+  CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
+  RESOURCE_GROUP: ${{ env.RESOURCE_GROUP }}
+  CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
+  DEPLOYMENT_MANIFEST_PATH: "."
 
 jobs:
   buildImage:
