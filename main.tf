@@ -80,7 +80,7 @@ resource "azurerm_container_registry" "acr" {
   }
 }
 
-resource "azurerm_kubernetes_cluster" "default" {
+resource "azurerm_kubernetes_cluster" "aks" {
   name                = "${random_pet.rg_name.id}-aks"
   location            = azurerm_resource_group.anup-test-rg.location
   resource_group_name = azurerm_resource_group.anup-test-rg.name
@@ -103,5 +103,23 @@ resource "azurerm_kubernetes_cluster" "default" {
     environment = "Demo Environment"
     created_by  = "terraform"
   }
+}
+
+data "azurerm_role_definition" "acr_pull" {
+  name = "AcrPull"
+}
+
+# Assign AcrPull to the AKS kubelet identity so nodes can pull images from ACR.
+# Use the kubelet_identity object_id (this is the identity used by kubelets to pull images)§§§§
+resource "azurerm_role_assignment" "aks_acr_pull" {
+  scope              = azurerm_container_registry.acr.id
+  role_definition_id = data.azurerm_role_definition.acr_pull.id
+  principal_id       = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
+
+  skip_service_principal_aad_check = true
+
+  depends_on = [
+    azurerm_kubernetes_cluster.aks
+  ]
 }
 

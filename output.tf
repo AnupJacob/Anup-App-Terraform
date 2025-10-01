@@ -9,7 +9,7 @@ output "private_key_pem" {
 
 output "aks_name" {
   description = "AKS cluster name"
-  value       = azurerm_kubernetes_cluster.default.name
+  value       = azurerm_kubernetes_cluster.aks.name
 }
 
 output "acr_name" {
