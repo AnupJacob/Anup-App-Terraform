@@ -38,12 +38,11 @@ jobs:
       - uses: actions/checkout@v4
 
       # Logs in with your Azure credentials
-      - name: Azure login
-        uses: azure/login@v1.4.6
+      - name: Azure Login
+        uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
 
       # Use kubelogin to configure your kubeconfig for Azure auth
       - name: Set up kubelogin for non-interactive login
