@@ -37,6 +37,10 @@ jobs:
       # Checks out the repository this file is in
       - uses: actions/checkout@v4
 
+      - name: Azure check
+        run: "az --version"
+        shell: bash
+
       # Logs in with your Azure credentials
       - name: Azure Login
         uses: azure/login@v2
