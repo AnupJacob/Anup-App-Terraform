@@ -45,14 +45,14 @@ resource "azurerm_linux_virtual_machine" "anup_vm" {
   name                = "anup-virtual-machine"
   resource_group_name = azurerm_resource_group.anup-test-rg.name
   location            = azurerm_resource_group.anup-test-rg.location
-  size                = "Standard_F2"
-  admin_username      = "azureuser"
+  size                = var.vm_size_azure
+  admin_username      = var.azure_user
   network_interface_ids = [
     azurerm_network_interface.anup_nic.id,
   ]
 
   admin_ssh_key {
-    username   = "azureuser"
+    username   = var.azure_user
     public_key = tls_private_key.ssh.public_key_openssh
   }
 
@@ -69,6 +69,17 @@ resource "azurerm_linux_virtual_machine" "anup_vm" {
   }
 }
 
+resource "azurerm_container_registry" "acr" {
+  name                = "testacr"
+  location            = azurerm_resource_group.anup-test-rg.location
+  resource_group_name = azurerm_resource_group.anup-test-rg.name
+  sku                 = var.acr_sku
+  admin_enabled       = false
+  tags = {
+    created_by = "terraform"
+  }
+}
+
 resource "azurerm_kubernetes_cluster" "default" {
   name                = "${random_pet.rg_name.id}-aks"
   location            = azurerm_resource_group.anup-test-rg.location
@@ -77,9 +88,9 @@ resource "azurerm_kubernetes_cluster" "default" {
   kubernetes_version  = "1.33.0"
 
   default_node_pool {
-    name            = "default"
-    node_count      = 1
-    vm_size         = "Standard_B2s"
+    name       = "aks"
+    node_count = var.node_count_kub
+    vm_size    = var.vm_size_kub
   }
 
   identity {
@@ -90,6 +101,7 @@ resource "azurerm_kubernetes_cluster" "default" {
 
   tags = {
     environment = "Demo Environment"
+    created_by  = "terraform"
   }
 }
 
