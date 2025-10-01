@@ -15,9 +15,13 @@ jobs:
       # Checks out the repository this file is in
       - uses: actions/checkout@v4
 
+      - name: Azure check
+        run: "az --version"
+        shell: bash
+
       # Logs in with your Azure credentials
-      - name: Azure login
-        uses: azure/login@v1.4.6
+      - name: Azure Login
+        uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
