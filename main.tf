@@ -68,9 +68,12 @@ resource "azurerm_linux_virtual_machine" "anup_vm" {
     version   = "latest"
   }
 }
+resource "random_id" "acr_suffix" {
+  byte_length = 3
+}
 
 resource "azurerm_container_registry" "acr" {
-  name                = "testacr"
+  name                = "anup-acr${random_id.acr_suffix.hex}"
   location            = azurerm_resource_group.anup-test-rg.location
   resource_group_name = azurerm_resource_group.anup-test-rg.name
   sku                 = var.acr_sku
